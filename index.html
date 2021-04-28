@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+</head>
+<body>
+  <input type="text" id="listSubscribe"/> <br />
+  <input type="button" id="btnSubscribe" value="Subscribe" /> <br />
+  <input type="button" id="btnUnSubscribe" value="UnSubscribe" /> <br />
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    var socket = io('http://localhost');
+
+    socket.on('connect', () => {
+      console.log('socket connected');
+    });
+
+    btnSubscribe.addEventListener("click", () => {
+      socket.emit('subscribe', { filter: document.getElementById("listSubscribe").value });
+    });
+
+    btnUnSubscribe.addEventListener("click", () => {
+      socket.emit('unsubscribe');
+      document.getElementById("listSubscribe").value = "";
+    });
+
+    socket.on('getData', data => {
+      console.log(data);
+
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
